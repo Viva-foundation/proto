@@ -27,7 +27,7 @@ export class JournalInterceptor implements NestInterceptor {
       url,
       method,
       user: request.user?.id,
-      ip,
+      ip: ip || '',
     });
     return next.handle();
   }
