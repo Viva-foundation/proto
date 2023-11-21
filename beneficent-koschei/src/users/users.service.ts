@@ -11,6 +11,7 @@ export class UsersService {
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
   ) {}
+
   async findOne(email: string): Promise<UserEntity | undefined> {
     return await this.usersRepository.findOne({
       where: { email, isRemoved: false, isActive: true },

@@ -1,12 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { UserEntity } from './user.entity';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseTimestamp } from './base-timestamp';
 
 @Entity({ name: 'journal' })

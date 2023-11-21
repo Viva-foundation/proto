@@ -16,27 +16,6 @@ export class PatientsService {
     private patientsRepository: Repository<PatientsEntity>,
   ) {}
 
-  private async getPatient({
-    firstName,
-    lastName,
-    passport,
-  }: PatientsFindRequestDto) {
-    return this.patientsRepository.findOne({
-      where: {
-        passport: this.passportParser(passport),
-        firstName,
-        lastName,
-      },
-    });
-  }
-
-  private getPatientIdResponse(
-    patient: PatientsEntity,
-  ): PatientsFindResponseDto {
-    const { id, isRemoved, isActive, removeReason, blockReason } = patient;
-    return { result: true, id, isRemoved, isActive, removeReason, blockReason };
-  }
-
   async find({
     passport,
     lastName,
@@ -106,5 +85,26 @@ export class PatientsService {
 
   passportParser(passport: string): string {
     return passport.replace(/\s/g, '').toLowerCase();
+  }
+
+  private async getPatient({
+    firstName,
+    lastName,
+    passport,
+  }: PatientsFindRequestDto) {
+    return this.patientsRepository.findOne({
+      where: {
+        passport: this.passportParser(passport),
+        firstName,
+        lastName,
+      },
+    });
+  }
+
+  private getPatientIdResponse(
+    patient: PatientsEntity,
+  ): PatientsFindResponseDto {
+    const { id, isRemoved, isActive, removeReason, blockReason } = patient;
+    return { result: true, id, isRemoved, isActive, removeReason, blockReason };
   }
 }

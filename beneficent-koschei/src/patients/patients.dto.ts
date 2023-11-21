@@ -1,9 +1,9 @@
 import {
   IsEmail,
   IsNumber,
+  IsOptional,
   IsPhoneNumber,
   IsString,
-  IsOptional,
 } from 'class-validator';
 
 export class PatientsFindRequestDto {
