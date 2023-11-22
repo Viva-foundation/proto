@@ -2,7 +2,7 @@
 import {ref} from "vue";
 import {useAuthStore} from "@/stores/auth.store";
 import {useRouter} from "vue-router";
-import AppPrepoader from "@/components/app-prepoader.vue";
+import AppPrepoader from "@/components/app-preloader.vue";
 
 const login = ref<string>('');
 const password = ref<string>('');
@@ -10,6 +10,8 @@ const isLoading = ref<boolean>(false);
 const hasError = ref<boolean>(false);
 
 const router = useRouter();
+
+const { t } = useI18n();
 
 const authStore = useAuthStore();
 const onLogin = async () => {
@@ -29,18 +31,18 @@ const onLogin = async () => {
 <div class="center-login">
   <form class="row g-3" @submit.prevent="onLogin">
     <div class="mb-3">
-      <label for="formGroupExampleInput" class="form-label">Email</label>
+      <label for="formGroupExampleInput" class="form-label">{{ t('email') }}</label>
       <input type="text" :class="{'form-control':true, 'is-invalid':hasError}" id="formGroupExampleInput" v-model="login">
     </div>
     <div class="mb-3">
-      <label for="formGroupExampleInput2" class="form-label">Password</label>
+      <label for="formGroupExampleInput2" class="form-label">{{ t('password')}}</label>
       <input type="password" :class="{'form-control':true, 'is-invalid':hasError}" id="formGroupExampleInput2" v-model="password">
       <div class="invalid-feedback">
-        Wrong user or password
+        {{ t('wrong_user_or_password') }}
       </div>
     </div>
     <div class="mb-3">
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary">{{ t('login_action') }}</button>
     </div>
   </form>
 </div>
@@ -55,3 +57,20 @@ const onLogin = async () => {
   height: 100vh;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "email": "Email",
+    "password": "Password",
+    "wrong_user_or_password": "Wrong user or password",
+    "login_action": "Login"
+  },
+  "am": {
+    "email": "Էլ․ հասցե",
+    "password": "Գաղտնաբառ",
+    "wrong_user_or_password": "Սխալ օգտվող կամ գաղտնաբառ",
+    "login_action": "Մուտք"
+  }
+}
+</i18n>
