@@ -99,8 +99,8 @@ const clearForm = ()=>{
             <input type="text" class="form-control" id="phonetInput" placeholder="+37400000000" v-model="phoneNumber">
           </div>
           <div class="mb-3">
-            <label for="dobInput" class="form-label">Email</label>
-            <input type="date" class="form-control" id="dobInput" placeholder="Optional email" v-model="dob">
+            <label for="dobInput" class="form-label">Date of birth</label>
+            <input type="date" class="form-control" id="dobInput"  v-model="dob">
           </div>
           <div class="mb-3">
             <label for="emailInput" class="form-label">Email</label>
@@ -128,6 +128,7 @@ const clearForm = ()=>{
           <span class="badge rounded-pill text-bg-danger" v-if="!activePatient?.isActive">Banned</span>
         </div>
         <div class="mb-3">
+          <h5>{{firstName}} {{lastName}}</h5>
           <h5>{{activePatient?.id}}</h5>
         </div>
         <div class="mb-3" v-if="activePatient?.isRemoved">

@@ -52,16 +52,19 @@ export const usePatientStore = defineStore('patient', () => {
   const createPatient = async (firstName: string, lastName: string, passport: string, phone: string,sDob: string, email: string):Promise<boolean> => {
     const dob = new Date(sDob).getTime();
     try {
+      const data:Record<string, any> = {
+        firstName,
+        lastName,
+        passport,
+        phone,
+        dob
+      };
+      if(email){
+        data.email = email;
+      }
       const request = await fetch(import.meta.env.VITE_SRV_BASE_URL + '/patients/create', {
         method: 'POST',
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          passport,
-          phone,
-          dob,
-          email
-        }),
+        body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
           ...await authStore.getAuthToken()
