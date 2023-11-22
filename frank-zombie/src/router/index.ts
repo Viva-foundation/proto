@@ -13,7 +13,7 @@ const router = createRouter({
       redirect: ()=>{
         const authStore = useAuthStore();
         if(authStore.getIsAuth){
-          return '/editor';
+          return '/dash';
         }
         return '/login';
       }
@@ -30,21 +30,25 @@ const router = createRouter({
       path: '/dash',
       name: 'dash',
       component: DashView,
-      meta:{
-        protected:true,
+      meta: {
+        protected: true,
       },
-      children:[
-        {
-          path: 'distribute',
-          name: 'distribute',
-          component: DistributeView,
-        },
-        {
-          path: 'distribute/:id',
-          name: 'distribute-patient',
-          component: DistributePatientView,
-        }
-      ]
+    },
+    {
+      path: '/dash/distribute',
+      name: 'distribute',
+      component: DistributeView,
+      meta: {
+        protected: true,
+      },
+    },
+    {
+      path: '/dash/distribute/:id',
+      name: 'distribute-patient',
+      component: DistributePatientView,
+      meta: {
+        protected: true,
+      },
     }
   ]
 })

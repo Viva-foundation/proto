@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import {useAuthStore} from "@/stores/auth.store";
 import {useRouter} from "vue-router";
+import AppPrepoader from "@/components/app-prepoader.vue";
 
 const login = ref<string>('');
 const password = ref<string>('');
@@ -43,9 +44,7 @@ const onLogin = async () => {
     </div>
   </form>
 </div>
-<div class="preloader" v-if="isLoading">
-  <div>Loading...</div>
-</div>
+<app-prepoader v-if="isLoading"></app-prepoader>
 </template>
 
 <style scoped>
@@ -54,16 +53,5 @@ const onLogin = async () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-.preloader{
-  position: absolute;
-  left: 0;
-  right: 0;
-  top:0;
-  bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>
