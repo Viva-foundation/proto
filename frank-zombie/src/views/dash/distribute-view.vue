@@ -15,7 +15,7 @@ const isLoading = ref<boolean>(false);
 
 const patientStore = usePatientStore();
 
-const activePatient = computed<Patient>(()=>(patientStore.activePatient));
+const activePatient = computed<Patient|null>(()=>(patientStore.activePatient));
 const lastErrors = computed<string[]>(()=>(patientStore.lastErrors));
 const searchPatient = async ()=>{
   isLoading.value = true;
@@ -124,19 +124,19 @@ const clearForm = ()=>{
       <div class="col-3" v-if="isClientRequested && isClientFound && activePatient">
         <h3>Patient:</h3>
         <div class="mb-3">
-          <span class="badge rounded-pill text-bg-danger" v-if="activePatient.isRemoved">Removed</span>&nbsp;
-          <span class="badge rounded-pill text-bg-danger" v-if="!activePatient.isActive">Banned</span>
+          <span class="badge rounded-pill text-bg-danger" v-if="activePatient?.isRemoved">Removed</span>&nbsp;
+          <span class="badge rounded-pill text-bg-danger" v-if="!activePatient?.isActive">Banned</span>
         </div>
         <div class="mb-3">
-          <h5>{{activePatient.id}}</h5>
+          <h5>{{activePatient?.id}}</h5>
         </div>
-        <div class="mb-3" v-if="patientStore.activePatient.isRemoved">
+        <div class="mb-3" v-if="activePatient?.isRemoved">
           <h5>Remove reason</h5>
-          {{activePatient.removeReason}}
+          {{activePatient?.removeReason}}
         </div>
-        <div class="mb-3" v-if="!patientStore.activePatient.isActive">
+        <div class="mb-3" v-if="!activePatient?.isActive">
           <h5>Ban reason</h5>
-          {{activePatient.banReason}}
+          {{activePatient?.blockReason}}
         </div>
         <div class="mb-12">
           <button type="button" class="btn btn-warning" @click="clearForm">Close patient</button>

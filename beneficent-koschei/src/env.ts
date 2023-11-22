@@ -2,6 +2,7 @@ export interface Env {
   APP_PORT: number;
   APP_HOST: string;
   APP_BASE_URL: string;
+  APP_PREFIX: string;
 
   JWT_SECRET: string; // please use `openssl rand -base64 172 | tr -d '\n'` to generate a random string
 
