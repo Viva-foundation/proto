@@ -16,6 +16,7 @@ const isLoading = ref<boolean>(false);
 const patientStore = usePatientStore();
 
 const activePatient = computed<Patient>(()=>(patientStore.activePatient));
+const lastErrors = computed<string[]>(()=>(patientStore.lastErrors));
 const searchPatient = async ()=>{
   isLoading.value = true;
   const result = await patientStore.searchPatient(firstName.value, lastName.value, passport.value);
@@ -25,6 +26,15 @@ const searchPatient = async ()=>{
   isLoading.value = false;
 }
 
+const createPatient = async ()=>{
+  isLoading.value = true;
+  const result = await patientStore.createPatient(firstName.value, lastName.value, passport.value, phoneNumber.value, dob.value, email.value);
+  isClientFound.value = result;
+  isHasErrors.value = !result;
+  isLoading.value = false;
+}
+
+const isHasErrors = ref<boolean>(false);
 const isClientRequested = ref<boolean>(false);
 const isClientFound = ref<boolean>(false);
 
@@ -71,7 +81,7 @@ const clearForm = ()=>{
       </div>
       <div class="col-3" v-if="isClientRequested && !isClientFound">
         <h3>Create patient</h3>
-        <form @submit.prevent="searchPatient">
+        <form @submit.prevent="createPatient">
           <div class="mb-3">
             <label for="firstNameInput" class="form-label">First name</label>
             <input type="text" class="form-control" id="firstNameInput" placeholder="First name" v-model="firstName">
@@ -95,6 +105,13 @@ const clearForm = ()=>{
           <div class="mb-3">
             <label for="emailInput" class="form-label">Email</label>
             <input type="email" class="form-control" id="emailInput" placeholder="Optional email" v-model="email">
+          </div>
+          <div class="mb-3" v-if="isHasErrors">
+            <div class="alert alert-danger" role="alert">
+              <ul>
+                <li v-for="error of lastErrors">{{error}}</li>
+              </ul>
+            </div>
           </div>
           <div class="mb-3">
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">

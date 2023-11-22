@@ -13,6 +13,7 @@ export const usePatientStore = defineStore('patient', () => {
 
   const authStore = useAuthStore();
   const activePatient = ref<Patient|null>(null);
+  const lastErrors = ref<string[]>([]);
   const searchPatient = async (firstName: string, lastName: string, passport: string):Promise<boolean> => {
     try {
       const request = await fetch(import.meta.env.VITE_SRV_BASE_URL + '/patients/search', {
@@ -48,12 +49,49 @@ export const usePatientStore = defineStore('patient', () => {
       return false;
     }
   };
-  const createPatient = async (firstName: string, lastName: string, passport: string, phoneNumber: string, email: string) => {
+  const createPatient = async (firstName: string, lastName: string, passport: string, phone: string,sDob: string, email: string):Promise<boolean> => {
+    const dob = new Date(sDob).getTime();
+    try {
+      const request = await fetch(import.meta.env.VITE_SRV_BASE_URL + '/patients/create', {
+        method: 'POST',
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          passport,
+          phone,
+          dob,
+          email
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          ...await authStore.getAuthToken()
+        }
+      });
 
+      const mData = await request.json();
+      if (!request.ok) {
+        lastErrors.value = Array.isArray(mData.message)?mData.message:[mData.message];
+        return false;
+      }
+      if (mData.result) {
+        activePatient.value = {
+          id: mData.id,
+          isRemoved: mData.isRemoved,
+          isActive: mData.isActive,
+          removeReason: mData.removeReason,
+          blockReason: mData.blockReason,
+        };
+        return true;
+      }
+      return false;
+    } catch (e){
+      console.error(e);
+      return false;
+    }
   };
 
   const clearPatient = () => {
     activePatient.value = null;
   }
-  return {searchPatient, createPatient, clearPatient, activePatient}
+  return {searchPatient, createPatient, clearPatient, activePatient,lastErrors}
 });
