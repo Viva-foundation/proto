@@ -3,6 +3,7 @@ import {ref} from "vue";
 import {useAuthStore} from "@/stores/auth.store";
 import {useRouter} from "vue-router";
 import AppPrepoader from "@/components/app-preloader.vue";
+import {useI18n} from "vue-i18n";
 
 const login = ref<string>('');
 const password = ref<string>('');

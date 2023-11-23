@@ -33,22 +33,18 @@ const router = createRouter({
       meta: {
         protected: true,
       },
-    },
-    {
-      path: '/dash/distribute',
-      name: 'distribute',
-      component: DistributeView,
-      meta: {
-        protected: true,
-      },
-    },
-    {
-      path: '/dash/distribute/:id',
-      name: 'distribute-patient',
-      component: DistributePatientView,
-      meta: {
-        protected: true,
-      },
+      children: [
+        {
+          path: 'distribute',
+          name: 'distribute',
+          component: DistributeView,
+        },
+        {
+          path: 'distribute/:id',
+          name: 'distribute-patient',
+          component: DistributePatientView,
+        }
+      ]
     }
   ]
 })
