@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
-import {Patient, usePatientStore} from "@/stores/patient.store";
+import {type Patient, usePatientStore} from "@/stores/patient.store";
 import {useI18n} from "vue-i18n";
 import AppPreloader from "@/components/app-preloader.vue";
 
