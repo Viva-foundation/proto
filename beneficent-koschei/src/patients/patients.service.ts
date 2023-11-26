@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PatientsEntity } from '../db/patients.entity';
+import { PatientEntity } from '../db/patientEntity';
 import {
   PatientsBanRequestDto,
   PatientsCreateRequestDto,
@@ -12,8 +12,8 @@ import {
 @Injectable()
 export class PatientsService {
   constructor(
-    @InjectRepository(PatientsEntity)
-    private patientsRepository: Repository<PatientsEntity>,
+    @InjectRepository(PatientEntity)
+    private patientsRepository: Repository<PatientEntity>,
   ) {}
 
   async find({
@@ -87,6 +87,12 @@ export class PatientsService {
     return passport.replace(/\s/g, '').toLowerCase();
   }
 
+  async getPatientById(id: string): Promise<PatientEntity> {
+    return this.patientsRepository.findOne({
+      where: { id },
+    });
+  }
+
   private async getPatient({
     firstName,
     lastName,
@@ -102,7 +108,7 @@ export class PatientsService {
   }
 
   private getPatientIdResponse(
-    patient: PatientsEntity,
+    patient: PatientEntity,
   ): PatientsFindResponseDto {
     const { id, isRemoved, isActive, removeReason, blockReason } = patient;
     return { result: true, id, isRemoved, isActive, removeReason, blockReason };

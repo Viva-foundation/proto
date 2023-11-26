@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseTimestamp } from './base-timestamp';
-import { PatientsEntity } from './patients.entity';
+import { PatientEntity } from './patientEntity';
 import { MedicationEntity } from './medication.entity';
 import { UserEntity } from './user.entity';
 
@@ -12,9 +12,9 @@ export class MedicationTakeoutEntity extends BaseTimestamp {
     () => MedicationEntity,
     (medication) => medication.medicationTakeouts,
   )
-  medication: string;
-  @ManyToOne(() => PatientsEntity, (patient) => patient.medicationTakeouts)
-  patient: string;
+  medication: MedicationEntity;
+  @ManyToOne(() => PatientEntity, (patient) => patient.medicationTakeouts)
+  patient: PatientEntity;
   @Column()
   quantity: number;
   @ManyToOne(() => UserEntity, (user) => user.medicationTakeouts)

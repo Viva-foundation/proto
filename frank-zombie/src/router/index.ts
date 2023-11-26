@@ -3,7 +3,7 @@ import {useAuthStore} from "@/stores/auth.store";
 import LoginView from "@/views/login-view.vue";
 import DashView from "@/views/dash-view.vue";
 import DistributeView from "@/views/dash/distribute-view.vue";
-import DistributePatientView from "@/views/dash/distribute-patient-view.vue";
+import HomeView from "@/views/dash/home-view.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
@@ -30,19 +30,20 @@ const router = createRouter({
       path: '/dash',
       name: 'dash',
       component: DashView,
+      redirect: '/dash/home',
       meta: {
         protected: true,
       },
       children: [
         {
+          path: 'home',
+          name: 'dash-home',
+          component: HomeView,
+        },
+        {
           path: 'distribute',
           name: 'distribute',
           component: DistributeView,
-        },
-        {
-          path: 'distribute/:id',
-          name: 'distribute-patient',
-          component: DistributePatientView,
         }
       ]
     }

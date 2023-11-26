@@ -4,7 +4,7 @@ import { MedicationEntity } from './medication.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'medication_substances' })
-export class MedicationSubstancesEntity extends BaseTimestamp {
+export class MedicationSubstanceEntity extends BaseTimestamp {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @ManyToOne(() => MedicationEntity, (medication) => medication.substancesData)

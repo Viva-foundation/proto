@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { MedicationNameVariantEntity } from './medication-name-variant.entity';
 import { BaseTimestamp } from './base-timestamp';
-import { MedicationSubstancesEntity } from './medication-substances.entity';
+import { MedicationSubstanceEntity } from './medication-substance.entity';
 import { MedicationFormEntity } from './medication-form.entity';
 import { MedicationGroupEntity } from './medication-group.entity';
 import { MedicationTakeoutEntity } from './medication-takeout.entity';
@@ -24,14 +24,14 @@ export class MedicationEntity extends BaseTimestamp {
   )
   nameVariants: MedicationNameVariantEntity[];
   @OneToMany(
-    () => MedicationSubstancesEntity,
+    () => MedicationSubstanceEntity,
     (substances) => substances.medication,
   )
-  substancesData: MedicationSubstancesEntity;
+  substancesData: MedicationSubstanceEntity;
   @ManyToOne(() => MedicationFormEntity, (form) => form.medications)
   form: MedicationFormEntity;
   @ManyToOne(() => MedicationGroupEntity, (group) => group.medications)
-  group: string;
+  group: MedicationGroupEntity;
   @Column()
   packSize: number;
   @OneToMany(() => MedicationTakeoutEntity, (takeout) => takeout.medication)

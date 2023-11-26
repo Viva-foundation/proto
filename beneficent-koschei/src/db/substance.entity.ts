@@ -1,13 +1,13 @@
 import { BaseTimestamp } from './base-timestamp';
 import { Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { MedicationSubstancesEntity } from './medication-substances.entity';
+import { MedicationSubstanceEntity } from './medication-substance.entity';
 
 @Entity({ name: 'substances' })
 export class SubstanceEntity extends BaseTimestamp {
   @PrimaryColumn()
   name: string;
   @OneToMany(
-    () => MedicationSubstancesEntity,
+    () => MedicationSubstanceEntity,
     (medicationSubstances) => medicationSubstances.substance,
   )
   medicationRelations: any;

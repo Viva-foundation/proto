@@ -17,11 +17,12 @@ import { MedicationEntity } from './db/medication.entity';
 import { MedicationFormEntity } from './db/medication-form.entity';
 import { MedicationGroupEntity } from './db/medication-group.entity';
 import { MedicationNameVariantEntity } from './db/medication-name-variant.entity';
-import { MedicationSubstancesEntity } from './db/medication-substances.entity';
+import { MedicationSubstanceEntity } from './db/medication-substance.entity';
 import { SubstanceEntity } from './db/substance.entity';
 import { MedicationTakeoutEntity } from './db/medication-takeout.entity';
 import { PatientsModule } from './patients/patients.module';
-import { PatientsEntity } from './db/patients.entity';
+import { PatientEntity } from './db/patientEntity';
+import { MedicationModule } from './medication/medication.module';
 
 @Module({
   imports: [
@@ -46,11 +47,11 @@ import { PatientsEntity } from './db/patients.entity';
           MedicationFormEntity,
           MedicationGroupEntity,
           MedicationNameVariantEntity,
-          MedicationSubstancesEntity,
+          MedicationSubstanceEntity,
           SubstanceEntity,
           MedicationEntity,
           MedicationTakeoutEntity,
-          PatientsEntity,
+          PatientEntity,
         ],
         synchronize: true,
         ssl: {
@@ -63,6 +64,7 @@ import { PatientsEntity } from './db/patients.entity';
     }),
     TestModule,
     PatientsModule,
+    MedicationModule,
   ],
   controllers: [AppController],
   providers: [

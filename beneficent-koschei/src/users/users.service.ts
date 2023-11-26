@@ -22,7 +22,6 @@ export class UsersService {
     password: string,
     user?: UserEntity,
   ): Promise<boolean> {
-    console.log(user, password);
     if (!user) return false;
     return bcrypt.compare(password, user.hash);
   }

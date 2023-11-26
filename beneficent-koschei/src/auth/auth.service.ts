@@ -15,7 +15,6 @@ export class AuthService {
     inputPassword: string,
   ): Promise<Partial<UserEntity> | null> {
     const user = await this.usersService.findOne(inputEmail);
-    console.log(inputEmail, inputPassword, user);
     if (!(await this.usersService.validatePassword(inputPassword, user))) {
       return null;
     }

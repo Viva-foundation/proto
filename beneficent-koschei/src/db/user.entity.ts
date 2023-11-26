@@ -3,7 +3,7 @@ import { Role } from '../enums/role.enum';
 import { Exclude } from 'class-transformer';
 import { JournalEntity } from './journal.entity';
 import { BaseTimestamp } from './base-timestamp';
-import { PatientsEntity } from './patients.entity';
+import { PatientEntity } from './patientEntity';
 import { MedicationTakeoutEntity } from './medication-takeout.entity';
 
 @Entity({ name: 'users' })
@@ -22,8 +22,8 @@ export class UserEntity extends BaseTimestamp {
 
   @OneToMany(() => JournalEntity, (journal) => journal.user)
   journal: JournalEntity[];
-  @OneToMany(() => PatientsEntity, (patients) => patients.creator)
-  patients: PatientsEntity[];
+  @OneToMany(() => PatientEntity, (patients) => patients.creator)
+  patients: PatientEntity[];
   @OneToMany(() => MedicationTakeoutEntity, (takeout) => takeout.creator)
   medicationTakeouts: MedicationTakeoutEntity;
   @Column({ default: true })

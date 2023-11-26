@@ -10,7 +10,7 @@ import { MedicationTakeoutEntity } from './medication-takeout.entity';
 import { UserEntity } from './user.entity';
 
 @Entity({ name: 'patients' })
-export class PatientsEntity extends BaseTimestamp {
+export class PatientEntity extends BaseTimestamp {
   @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column()

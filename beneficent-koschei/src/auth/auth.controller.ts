@@ -24,7 +24,6 @@ export class AuthController {
 
   @Post('renew')
   renew(@Request() req) {
-    console.error(req.user);
     return this.authService.login(req.user);
   }
 }
