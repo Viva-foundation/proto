@@ -68,13 +68,15 @@ export class MedicationService {
       createdAt: Between(new Date(body.from), new Date(body.to)),
     };
     if (body.patient_id) {
-      where.patient = this.patientsService.getPatientById(body.patient_id);
+      where.patient = await this.patientsService.getPatientById(
+        body.patient_id,
+      );
     }
     if (body.medication_id) {
-      where.mediaction.id = this.getMedicationById(body.medication_id);
+      where.mediaction.id = await this.getMedicationById(body.medication_id);
     }
     if (body.user_id) {
-      where.creator.id = this.userService.getUser(body.user_id);
+      where.creator.id = await this.userService.getUser(body.user_id);
     }
     const takeouts = await this.medicationTakeoutsRepository
       .createQueryBuilder('takeout')
