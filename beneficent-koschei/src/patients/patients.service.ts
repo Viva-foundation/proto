@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Raw, Repository } from 'typeorm';
 import { PatientEntity } from '../db/patientEntity';
 import {
   PatientsBanRequestDto,
@@ -18,10 +18,9 @@ export class PatientsService {
 
   async find({
     passport,
-    lastName,
-    firstName,
+    dob,
   }: PatientsFindRequestDto): Promise<PatientsFindResponseDto> {
-    const patient = await this.getPatient({ passport, lastName, firstName });
+    const patient = await this.getPatient({ passport, dob });
     if (!patient) {
       return { result: false };
     }
@@ -36,9 +35,9 @@ export class PatientsService {
     phone,
     email,
   }: PatientsCreateRequestDto): Promise<PatientsFindResponseDto> {
-    const existTest = await this.find({ firstName, lastName, passport });
-    if (existTest.result) {
-      return existTest;
+    const existTest = await this.getPatient({ passport, dob });
+    if (existTest) {
+      return this.getPatientIdResponse(existTest);
     }
     const patient = await this.patientsRepository.save({
       firstName,
@@ -52,12 +51,11 @@ export class PatientsService {
   }
 
   async ban({
-    firstName,
-    lastName,
+    dob,
     passport,
     reason,
   }: PatientsBanRequestDto): Promise<PatientsFindResponseDto> {
-    const patient = await this.getPatient({ passport, lastName, firstName });
+    const patient = await this.getPatient({ passport, dob });
     if (!patient) {
       return { result: false };
     }
@@ -68,12 +66,11 @@ export class PatientsService {
   }
 
   async remove({
-    firstName,
-    lastName,
+    dob,
     passport,
     reason,
   }: PatientsBanRequestDto): Promise<PatientsFindResponseDto> {
-    const patient = await this.getPatient({ passport, lastName, firstName });
+    const patient = await this.getPatient({ passport, dob });
     if (!patient) {
       return { result: false };
     }
@@ -93,16 +90,11 @@ export class PatientsService {
     });
   }
 
-  private async getPatient({
-    firstName,
-    lastName,
-    passport,
-  }: PatientsFindRequestDto) {
+  private async getPatient({ dob, passport }: PatientsFindRequestDto) {
     return this.patientsRepository.findOne({
       where: {
         passport: this.passportParser(passport),
-        firstName,
-        lastName,
+        dob: Raw(`'${new Date(dob).toISOString().split('T')[0]} 00:00:00.000'`),
       },
     });
   }
@@ -110,7 +102,24 @@ export class PatientsService {
   private getPatientIdResponse(
     patient: PatientEntity,
   ): PatientsFindResponseDto {
-    const { id, isRemoved, isActive, removeReason, blockReason } = patient;
-    return { result: true, id, isRemoved, isActive, removeReason, blockReason };
+    const {
+      id,
+      isRemoved,
+      isActive,
+      removeReason,
+      blockReason,
+      lastName,
+      firstName,
+    } = patient;
+    return {
+      result: true,
+      firstName,
+      lastName,
+      id,
+      isRemoved,
+      isActive,
+      removeReason,
+      blockReason,
+    };
   }
 }

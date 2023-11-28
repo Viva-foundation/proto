@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://db-viva-pg-do-user-13958714-0.c.db.ondigitalocean.com:25060/viva-proto</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="viva-proto-prod@db-viva-pg-do-user-13958714-0.c.db.ondigitalocean.com" uuid="d5b95b12-2cb4-4a6e-9f2c-41afdcccb026">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://db-viva-pg-do-user-13958714-0.c.db.ondigitalocean.com:25060/viva-proto-prod</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

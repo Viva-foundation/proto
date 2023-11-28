@@ -26,4 +26,13 @@ export class AuthController {
   renew(@Request() req) {
     return this.authService.login(req.user);
   }
+
+  @Post('reset')
+  reset(@Request() req) {
+    return this.authService.resetPassword(
+      req.user,
+      req.body.old_password,
+      req.body.password,
+    );
+  }
 }

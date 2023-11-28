@@ -4,6 +4,8 @@ import {ref} from "vue";
 
 export interface Patient {
   id: string;
+  firstName: string;
+  lastName: string;
   isActive:boolean
   blockReason?: string;
   isRemoved?:string;
@@ -14,13 +16,12 @@ export const usePatientStore = defineStore('patient', () => {
   const authStore = useAuthStore();
   const activePatient = ref<Patient|null>(null);
   const lastErrors = ref<string[]>([]);
-  const searchPatient = async (firstName: string, lastName: string, passport: string):Promise<boolean> => {
+  const searchPatient = async (passport: string, dob:string):Promise<boolean> => {
     try {
       const request = await fetch(import.meta.env.VITE_SRV_BASE_URL + '/patients/search', {
         method: 'POST',
         body: JSON.stringify({
-          firstName,
-          lastName,
+          dob:new Date(dob).getTime(),
           passport,
         }),
         headers: {
@@ -36,6 +37,8 @@ export const usePatientStore = defineStore('patient', () => {
       if (mData.result) {
         activePatient.value = {
           id: mData.id,
+          firstName: mData.firstName,
+          lastName: mData.lastName,
           isRemoved: mData.isRemoved,
           isActive: mData.isActive,
           removeReason: mData.removeReason,
@@ -79,6 +82,8 @@ export const usePatientStore = defineStore('patient', () => {
       if (mData.result) {
         activePatient.value = {
           id: mData.id,
+          firstName: mData.firstName,
+          lastName: mData.lastName,
           isRemoved: mData.isRemoved,
           isActive: mData.isActive,
           removeReason: mData.removeReason,

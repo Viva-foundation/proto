@@ -49,4 +49,18 @@ export class UsersService {
     user.hash = hash;
     return await this.usersRepository.save(user);
   }
+
+  async resetPassword(
+    user: UserEntity,
+    old_password: string,
+    password: string,
+  ): Promise<void> {
+    const rUser = await this.findOne(user.email);
+    const compare = await bcrypt.compare(old_password, rUser.hash);
+    if (!compare) {
+      throw new Error('Wrong password');
+    }
+    rUser.hash = await bcrypt.hash(password, 10);
+    await this.usersRepository.save(rUser);
+  }
 }

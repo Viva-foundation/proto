@@ -33,4 +33,12 @@ export class AuthService {
   async register(login: string, password: string, name: string): Promise<any> {
     return await this.usersService.create(login, password, name);
   }
+
+  async resetPassword(
+    user: UserEntity,
+    old_password: string,
+    password: string,
+  ): Promise<any> {
+    return await this.usersService.resetPassword(user, old_password, password);
+  }
 }

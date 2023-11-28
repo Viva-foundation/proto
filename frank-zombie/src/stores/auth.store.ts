@@ -81,5 +81,26 @@ export const useAuthStore = defineStore('auth', ()=>{
     }
   }
 
-  return {getIsAuth,makeLogin, getAuthToken}
+  const changePassword = async (old_password:string, password:string)=>{
+    try {
+      const request = await fetch(import.meta.env.VITE_SRV_BASE_URL + '/auth/reset', {
+        method: 'POST',
+        body: JSON.stringify({
+          old_password,
+          password,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          ...await getAuthToken(),
+        }
+      });
+      if(!request.ok) throw new Error('Password change failed');
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  return {getIsAuth,makeLogin, getAuthToken, changePassword}
 })

@@ -25,6 +25,9 @@ const { t } = useI18n();
         </li>
 
       </ul>
+      <div>
+        <a class="btn btn-outline-success" href="/dash/settings">Settings</a>
+      </div>
     </div>
   </div>
 </nav>

@@ -19,7 +19,7 @@ const activePatient = computed<Patient | null>(() => (patientStore.activePatient
 const lastErrors = computed<string[]>(() => (patientStore.lastErrors));
 const searchPatient = async () => {
   isLoading.value = true;
-  const result = await patientStore.searchPatient(firstName.value, lastName.value, passport.value);
+  const result = await patientStore.searchPatient(passport.value, dob.value);
   isClientRequested.value = true;
   console.log(result);
   isClientFound.value = result;
@@ -57,19 +57,13 @@ const clearForm = () => {
     <h3>{{ t('search_header') }}</h3>
     <form @submit.prevent="searchPatient">
       <div class="mb-3">
-        <label for="firstNameInput" class="form-label">{{ t('first_name.label') }}</label>
-        <input type="text" class="form-control" id="firstNameInput" :placeholder="t('first_name.placeholder')"
-               v-model="firstName">
-      </div>
-      <div class="mb-3">
-        <label for="lastNameInput" class="form-label">{{ t('last_name.label') }}</label>
-        <input type="text" class="form-control" id="lastNameInput" :placeholder="t('last_name.placeholder')"
-               v-model="lastName">
-      </div>
-      <div class="mb-3">
         <label for="passportInput" class="form-label">{{ t('passport.label') }}</label>
         <input type="text" class="form-control" id="passportInput" :placeholder="t('passport.placeholder')"
                v-model="passport">
+      </div>
+      <div class="mb-3">
+        <label for="dobInput" class="form-label">{{ t('dob.label') }}</label>
+        <input type="date" class="form-control" id="dobInput" v-model="dob">
       </div>
       <div class="mb-3">
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -139,7 +133,7 @@ const clearForm = () => {
       <span class="badge rounded-pill text-bg-danger" v-if="!activePatient?.isActive">{{ t('is_banned') }}</span>
     </div>
     <div class="mb-3">
-      <h5>{{ firstName }} {{ lastName }}</h5>
+      <h5>{{ activePatient?.firstName }} {{ activePatient?.lastName }}</h5>
       <h5>{{ activePatient?.id }}</h5>
     </div>
     <div class="mb-3" v-if="activePatient?.isRemoved">

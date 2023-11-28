@@ -8,18 +8,14 @@ import {
 
 export class PatientsFindRequestDto {
   @IsString()
-  firstName: string;
-  @IsString()
-  lastName: string;
-  @IsString()
   passport: string;
+  @IsNumber()
+  dob: number;
 }
 
 export class PatientsBanRequestDto {
-  @IsString()
-  firstName: string;
-  @IsString()
-  lastName: string;
+  @IsNumber()
+  dob: number;
   @IsString()
   passport: string;
   @IsString()
@@ -45,6 +41,8 @@ export class PatientsCreateRequestDto {
 export class PatientsFindResponseDto {
   result: boolean;
   id?: string;
+  firstName?: string;
+  lastName?: string;
   isRemoved?: boolean;
   isActive?: boolean;
   blockReason?: string;

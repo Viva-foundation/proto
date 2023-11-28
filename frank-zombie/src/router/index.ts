@@ -4,6 +4,7 @@ import LoginView from "@/views/login-view.vue";
 import DashView from "@/views/dash-view.vue";
 import DistributeView from "@/views/dash/distribute-view.vue";
 import HomeView from "@/views/dash/home-view.vue";
+import SettingsView from "@/views/dash/settings-view.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
           path: 'distribute',
           name: 'distribute',
           component: DistributeView,
+        },
+        {
+          path: 'settings',
+          name: 'settings',
+          component: SettingsView,
         }
       ]
     }
