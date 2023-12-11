@@ -70,14 +70,15 @@ export const useAuthStore = defineStore('auth', ()=>{
 
   const storeToken = (token:string)=>{
     authToken.value = token;
-    const tokenParts = token.split('.');
-    const tokenData = JSON.parse(atob(tokenParts[1]));
-    expiresAt.value = tokenData.exp*1000;
     try{
       localStorage.setItem('auth-token',authToken.value);
+      const tokenParts = token.split('.');
+      const tokenData = JSON.parse(atob(tokenParts[1]));
+      expiresAt.value = tokenData.exp*1000;
       localStorage.setItem('expires-at',expiresAt.value.toString());
     } catch (e) {
       console.error(e);
+      localStorage.setItem('expires-at',(Date.now()+24*60*60*1000).toString());
     }
   }
 
